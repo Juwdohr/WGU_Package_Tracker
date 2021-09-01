@@ -1,5 +1,5 @@
 import unittest
-from HashTable import HashTable
+import HashTable
 
 
 class ChainedHashTableTestCase(unittest.TestCase):
