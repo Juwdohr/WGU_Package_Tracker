@@ -5,7 +5,7 @@ class ChainedHashTable:
     def __init__(self, initial_capacity=10):
         # initialize the hash table with empty bucket list entries.
         self.table = []
-        for i in range(initial_capacity):
+        for _ in range(initial_capacity):
             self.table.append([])
 
     # Inserts a new item into the hash table.

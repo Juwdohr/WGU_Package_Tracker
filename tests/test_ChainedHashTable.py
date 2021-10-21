@@ -6,7 +6,6 @@ class ChainedHashTableTestCase(unittest.TestCase):
 
     def setUp(self):
         self.hash_table = HashTable.Chained()
-        pass
 
     def tearDown(self):
         self.hash_table = None
