@@ -1,1 +1,1 @@
-from .Chained_HashTable import ChainedHashTable as Chained
+from .Chained import ChainedHashTable as Chained

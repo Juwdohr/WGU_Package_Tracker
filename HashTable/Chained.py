@@ -1,15 +1,24 @@
+from dataclasses import dataclass, field
+
+
 # HashTable class using chaining.
+@dataclass
 class ChainedHashTable:
+    table: list = field(default_factory=list)
+    capacity: int = 10
+
     # Constructor with optional initial capacity parameter.
     # Assigns all buckets with an empty list.
-    def __init__(self, initial_capacity=10):
-        # initialize the hash table with empty bucket list entries.
-        self.table = []
-        for i in range(initial_capacity):
+    def __post_init__(self):
+        # initialize the hash table with empty bucket list
+        for _ in range(self.capacity):
             self.table.append([])
 
+    def __len__(self):
+        return sum(len(self.table[i]) for i in range(len(self.table)))
+
     # Inserts a new item into the hash table.
-    def insert(self, key, item):  # does both insert and update
+    def insert(self, key, item):  # does both inse rt and update
         # get the bucket list where this item will go.
         bucket = hash(key) % len(self.table)
         bucket_list = self.table[bucket]
@@ -31,11 +40,9 @@ class ChainedHashTable:
         # get the bucket list where this key would be.
         bucket = hash(key) % len(self.table)
         bucket_list = self.table[bucket]
-        # print(bucket_list)
 
         # search for the key in the bucket list
         for kv in bucket_list:
-            # print (key_value)
             if kv[0] == key:
                 return kv[1]  # value
         return None
@@ -48,7 +55,6 @@ class ChainedHashTable:
 
         # remove the item from the bucket list if it is present.
         for kv in bucket_list:
-            # print (key_value)
             if kv[0] == key:
                 bucket_list.remove([kv[0], kv[1]])
                 return True

@@ -1,17 +1,18 @@
 import unittest
-import HashTable
+
+from HashTable.Chained import ChainedHashTable
 
 
 class ChainedHashTableTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.hash_table = HashTable.Chained()
-        pass
+        self.hash_table = ChainedHashTable()
 
     def tearDown(self):
         self.hash_table = None
 
     def test_init(self):
+        self.assertIsInstance(self.hash_table, ChainedHashTable)
         self.assertEqual(len(self.hash_table.table), 10)
         for table in self.hash_table.table:
             self.assertEqual(len(table), 0)

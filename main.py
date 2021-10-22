@@ -1,20 +1,33 @@
 import csv
 
 import HashTable
+from Package import Package
+
+MAX_PACKAGES = 16
+MAX_TRUCKS = 3
 
 
-def load_packages():
-    hash_table = HashTable.Chained()
+def load_file(file, structure):
     try:
-        packages = csv.DictReader(open('WGUPS Packages.csv', 'r'))
-    except FileNotFoundError as e:
-        print(e)
+
+        data = csv.DictReader(open(file, 'r', -1, 'utf-8-sig'))
+
+    except FileNotFoundError:
+
+        print(f'{file} was not found.')
+
+    except (IOError, OSError):
+
+        print('Error occurred while opening the file.')
+
     else:
-        for package in packages:
-            package_id = package.pop("Package ID")
-            hash_table.insert(package_id, package)
-    finally:
-        return hash_table
+
+        for line_item in data:
+            package = Package(**line_item)
+            structure.insert(package.id, package)
+
+        return structure
+
 
 if __name__ == '__main__':
-    package_table = load_packages()
+    package_table = load_file('WGUPSPackageFile.csv', HashTable.Chained())
