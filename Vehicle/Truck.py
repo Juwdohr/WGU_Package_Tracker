@@ -14,11 +14,10 @@ class Truck:
     speed: int = 18
     trip_odometer: int = 0
     MAX_CAPACITY: int = 16
-
     load: list = field(default_factory=list)
 
     def load_package(self, id: int) -> bool:
-        if id not in self.laod and len(self.laod) < self.MAX_CAPACITY:
+        if id not in self.load and len(self.load) < self.MAX_CAPACITY:
             self.load.append(id)
             return True
         return False
