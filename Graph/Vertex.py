@@ -1,16 +1,18 @@
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Type
 
 
-@dataclass(unsafe_hash=True)
+@dataclass(eq=False, unsafe_hash=False)
 class Vertex:
+    # Dataclass for a new Vertx object. All vertex objects
+    # start with a distance of positive infinity.
     label: str
-    distance: float = float('inf')
-    previous_vertex: Any = None
+    distance: float = field(init=False)
+    previous_vertex: Type['Vertex'] = field(init=False)
 
-    def __post_init__(self) -> None:
+    def __post_init__(self):
         self.reset()
 
-    def reset(self) -> None:
+    def reset(self):
         self.distance = float('inf')
         self.previous_vertex = None

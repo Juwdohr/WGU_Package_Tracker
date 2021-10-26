@@ -1,5 +1,5 @@
 import unittest
-from Graph import DirectedGraph, UndirectedGraph, Vertex
+from Graph import Directed, Undirected, Vertex
 from Graph.Graph import Graph
 
 
@@ -53,19 +53,17 @@ class test_Vertex(unittest.TestCase):
 
 class test_DirectedGraph(unittest.TestCase):
     def setUp(self) -> None:
-        self.directed_graph = DirectedGraph()
+        self.directed_graph = Directed()
         self.vertex_numb = Vertex("1")
         self.vertex_address = Vertex('1060 Dalton Ave S')
 
     def test_DirectedGraph_Creation(self) -> None:
         self.assertIsInstance(self.directed_graph, Graph)
-        self.assertEqual(self.directed_graph.vertices, [])
         self.assertEqual(self.directed_graph.edge_weights, {})
 
     def test_add_vertex(self) -> None:
         self.directed_graph.add_vertex(self.vertex_numb)
         self.directed_graph.add_vertex(self.vertex_address)
-        self.assertEqual(len(self.directed_graph.vertices), 2)
         self.assertEqual(len(self.directed_graph.adjacency_list), 2)
         self.assertEqual(self.directed_graph.edge_weights, {})
 
@@ -74,13 +72,11 @@ class test_DirectedGraph(unittest.TestCase):
         self.directed_graph.add_vertex(self.vertex_address)
 
         self.directed_graph.add_directed_edge(self.vertex_numb, self.vertex_address, 5.0)
-        self.assertEqual(len(self.directed_graph.vertices), 2)
         self.assertEqual(len(self.directed_graph.adjacency_list), 2)
         self.assertEqual(len(self.directed_graph.edge_weights), 1)
         self.assertEqual(self.directed_graph.edge_weights[self.vertex_numb, self.vertex_address], 5.0)
 
         self.directed_graph.add_directed_edge(self.vertex_address, self.vertex_numb, 100.0)
-        self.assertEqual(len(self.directed_graph.vertices), 2)
         self.assertEqual(len(self.directed_graph.adjacency_list), 2)
         self.assertEqual(len(self.directed_graph.edge_weights), 2)
         self.assertEqual(self.directed_graph.edge_weights[self.vertex_address, self.vertex_numb], 100.0)
@@ -98,19 +94,17 @@ class test_DirectedGraph(unittest.TestCase):
 
 class test_UndirectedGraph(unittest.TestCase):
     def setUp(self) -> None:
-        self.undirected_graph = UndirectedGraph()
+        self.undirected_graph = Undirected()
         self.vertex_numb = Vertex("1")
         self.vertex_address = Vertex('1060 Dalton Ave S')
 
     def test_UndirectedGraph_creation(self) -> None:
         self.assertIsInstance(self.undirected_graph, Graph)
-        self.assertEqual(self.undirected_graph.vertices, [])
         self.assertEqual(self.undirected_graph.edge_weights, {})
 
     def test_add_vertex(self) -> None:
         self.undirected_graph.add_vertex(self.vertex_numb)
         self.undirected_graph.add_vertex(self.vertex_address)
-        self.assertEqual(len(self.undirected_graph.vertices), 2)
         self.assertEqual(len(self.undirected_graph.adjacency_list), 2)
         self.assertEqual(self.undirected_graph.edge_weights, {})
 
@@ -119,13 +113,11 @@ class test_UndirectedGraph(unittest.TestCase):
         self.undirected_graph.add_vertex(self.vertex_address)
 
         self.undirected_graph.add_undirected_edge(self.vertex_numb, self.vertex_address, 5.0)
-        self.assertEqual(len(self.undirected_graph.vertices), 2)
         self.assertEqual(len(self.undirected_graph.adjacency_list), 2)
         self.assertNotEqual(len(self.undirected_graph.edge_weights), 1)
         self.assertEqual(self.undirected_graph.edge_weights[self.vertex_numb, self.vertex_address], 5.0)
 
         self.undirected_graph.add_undirected_edge(self.vertex_address, self.vertex_numb, 100.0)
-        self.assertEqual(len(self.undirected_graph.vertices), 2)
         self.assertEqual(len(self.undirected_graph.adjacency_list), 2)
         self.assertEqual(len(self.undirected_graph.edge_weights), 2)
         self.assertEqual(self.undirected_graph.edge_weights[self.vertex_address, self.vertex_numb], 100.0)

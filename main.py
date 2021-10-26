@@ -1,20 +1,94 @@
 import csv
+from datetime import datetime, time, date
 
+from Graph import Undirected, Vertex, dijkstra_shortest_path
 import HashTable
+from Package import Package
+from Vehicle import Truck
+
+MAX_TRUCKS = 3
 
 
-def load_packages():
-    hash_table = HashTable.Chained()
+def load_file(file, structure):
     try:
-        packages = csv.DictReader(open('WGUPS Packages.csv', 'r'))
-    except FileNotFoundError as e:
-        print(e)
+        data = csv.DictReader(open(file, 'r', -1, 'utf-8-sig'))
+    except FileNotFoundError:
+        print(f'{file} was not found.')
+
+    except (IOError, OSError):
+        print('Error occurred while opening the file.')
+
     else:
-        for package in packages:
-            package_id = package.pop("Package ID")
-            hash_table.insert(package_id, package)
+        if file == 'WGUPSPackageFile.csv':
+            for line_item in data:
+                package = Package(**line_item)
+                structure.insert(package.id, package)
+
+        else:
+            # This is the Distance Table to make a graph from
+            vertices = []
+            for name in data.fieldnames:
+                if name == '':
+                    continue
+                name = name.strip().split('\n')[0]
+                vertex = Vertex(name)
+                vertices.append(vertex)
+                structure.add_vertex(vertex)
+
+            for line_item in data:
+                start_vertex = structure.find_vertex(line_item[''].strip().split('\n')[0])
+                del line_item['']
+                for key in line_item:
+                    structure.add_undirected_edge(start_vertex, structure.find_vertex(key.strip().split('\n')[0]), float(line_item[key]))
+
     finally:
-        return hash_table
+        return structure
+
+
+def load_truck(truck_id):
+    switch = {
+        1: [25, 26, 15, 16, 34, 14, 40, 4, 20, 21, 28, 13, 39, 1, 19],
+        2: [5, 12, 31, 32, 17, 6, 8, 37, 38, 9, 30, 3, 36, 18],
+        3: [27, 35, 7, 29, 2, 33, 11, 24, 23, 10, 22]
+    }
+
+    return switch.get(truck_id, [])
+
 
 if __name__ == '__main__':
-    package_table = load_packages()
+    packages = HashTable.Chained()
+    distances = Undirected()
+
+    load_file('WGUPSPackageFile.csv', packages)
+    load_file('WGUPSDistanceTable.csv', distances)
+
+    HUB = distances.find_vertex('HUB')
+
+    dijkstra_shortest_path(distances, HUB)
+
+    fleet = []
+    for i in range(1, MAX_TRUCKS + 1):
+        fleet.append(Truck(i, HUB, load_truck(i)))
+
+    # Deliver Packages
+    for truck in fleet:
+        while len(truck.load) > 0:
+            truck.deliver_package(truck.load.pop(0), packages, distances)
+        if truck.id == 1:
+            dijkstra_shortest_path(distances, truck.location)
+            truck.travel(HUB)
+            print(f"Truck 1 finished at {truck.time}")
+            fleet[2].time = truck.time
+
+    total_distance = 0
+    # Check distances for testing
+    for truck in fleet:
+        print(f'Truck {truck.id}: {truck.trip_odometer}\nTruck {truck.id} finished at {format(truck.time.time(), "%I:%M %p")}')
+        total_distance += truck.trip_odometer
+    print(f'Total: {round(total_distance, 1)}')
+
+    if total_distance < 140:
+        for i in range(1, len(packages) + 1):
+            package = packages.search(i)
+            print(f'Package ID: {package.id}, Deadline: {package.delivery_deadline}, Delivered @ {package.delivery_time}')
+            print()
