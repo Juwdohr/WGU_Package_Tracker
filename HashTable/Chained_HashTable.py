@@ -1,12 +1,22 @@
-# HashTable class using chaining.
+from dataclasses import dataclass, field
+
+
+@dataclass
 class ChainedHashTable:
+    # HashTable class using chaining.
+    table: list = field(default_factory=list)
+    capacity: int = 10
+
     # Constructor with optional initial capacity parameter.
     # Assigns all buckets with an empty list.
-    def __init__(self, initial_capacity=10):
+    def __post_init__(self):
         # initialize the hash table with empty bucket list entries.
-        self.table = []
-        for _ in range(initial_capacity):
+        for _ in range(self.capacity):
             self.table.append([])
+
+    # return the length of all rows of the hashtable
+    def __len__(self):
+        return sum(len(self.table[i]) for i in range(len(self.table)))
 
     # Inserts a new item into the hash table.
     def insert(self, key, item):  # does both insert and update
