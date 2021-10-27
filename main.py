@@ -66,10 +66,7 @@ if __name__ == '__main__':
 
     dijkstra_shortest_path(distances, HUB)
 
-    fleet = []
-    for i in range(1, MAX_TRUCKS + 1):
-        fleet.append(Truck(i, HUB, load_truck(i)))
-
+    fleet = [Truck(i, HUB, load_truck(i)) for i in range(1, MAX_TRUCKS + 1)]
     # Deliver Packages
     for truck in fleet:
         for id in truck.load:
