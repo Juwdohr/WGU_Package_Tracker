@@ -1,8 +1,8 @@
 import csv
-from datetime import datetime, time, date
 
-from Graph import Undirected, Vertex, dijkstra_shortest_path
 import HashTable
+import Graph
+from Graph import Vertex, dijkstra_shortest_path
 from Package import Package
 from Vehicle import Truck
 
@@ -57,7 +57,7 @@ def load_truck(truck_id):
 
 if __name__ == '__main__':
     packages = HashTable.Chained()
-    distances = Undirected()
+    distances = Graph.Undirected()
 
     load_file('WGUPSPackageFile.csv', packages)
     load_file('WGUPSDistanceTable.csv', distances)
@@ -72,8 +72,13 @@ if __name__ == '__main__':
 
     # Deliver Packages
     for truck in fleet:
-        while len(truck.load) > 0:
-            truck.deliver_package(truck.load.pop(0), packages, distances)
+        for id in truck.load:
+            package = packages.search(id)
+            next_location = distances.find_vertex(package.address)
+            if next_location is not truck.location:
+                dijkstra_shortest_path(distances, truck.location)
+                truck.travel(next_location)
+            truck.deliver_package(package)
         if truck.id == 1:
             dijkstra_shortest_path(distances, truck.location)
             truck.travel(HUB)

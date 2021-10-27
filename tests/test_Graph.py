@@ -23,7 +23,7 @@ class test_Vertex(unittest.TestCase):
         self.assertEqual(self.vertex_address.previous_vertex, None)
         self.assertEqual(self.vertex_address.distance, float('inf'))
 
-    def test_linking_Vertices(self) -> None:
+    def test_linking(self) -> None:
         link_vertices(self.vertex_numb, self.vertex_address, 1.0)
         self.assertIsInstance(self.vertex_numb.previous_vertex, Vertex)
         self.assertEqual(self.vertex_numb.previous_vertex, self.vertex_address)
@@ -36,7 +36,7 @@ class test_Vertex(unittest.TestCase):
 
         self.assertNotEqual(self.vertex_numb.distance, self.vertex_address.distance)
 
-    def test_Vertice_reset(self) -> None:
+    def test_reset(self) -> None:
         link_vertices(self.vertex_numb, self.vertex_address, 1.0)
         link_vertices(self.vertex_address, self.vertex_numb, 10.0)
 

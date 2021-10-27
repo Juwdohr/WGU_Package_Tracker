@@ -1,21 +1,9 @@
 from dataclasses import dataclass, field
 from datetime import datetime, date, time, timedelta
-from typing import Type
 
-import HashTable
-from Graph import Graph, Vertex, dijkstra_shortest_path
+from Graph import Vertex
+from Package import Package
 
-
-def fastest_route(origin: Vertex, destination: Vertex) -> int:
-    total_distance = 0
-    path = ''
-    current_location = destination
-    while current_location is not origin:
-        path = '->' + current_location.label + path
-        total_distance += current_location.distance
-        current_location = current_location.previous_vertex
-    path = origin.label + path
-    return path, total_distance
 
 @dataclass
 class Truck:
@@ -36,16 +24,8 @@ class Truck:
             return True
         return False
 
-    def deliver_package(self, id: int, _table: HashTable, _graph: Graph):
-        package = _table.search(id)
-        next_location = _graph.find_vertex(package.address)
-        if next_location is not self.location:
-            dijkstra_shortest_path(_graph, self.location)
-            self.travel(next_location)
-        print(self.time.time() > time(10, 20), f'Truck ID: {self.id}, Package ID: {id}, Time: {self.time.time()}')
-        # if(self.time > time(10, 20) and 9 in self.load:
-        #     package
-        package.deliver(self.time.time())
+    def deliver_package(self, package: Package):
+        package.deliver(self.time)
 
     def travel(self, next_location: Vertex):
         distance_traveled = next_location.distance

@@ -12,7 +12,7 @@ class Package:
     delivery_deadline: time
     mass: str
     notes: str
-    status: str = 'En Route'
+    status: str = 'At Hub'
     delivery_time: time = field(init=False)
 
     def __post_init__(self):
@@ -39,6 +39,6 @@ class Package:
         self.address, self.city, rest = updated_delivery_address.split(', ')
         self.state, self.postal_code = rest.split(' ')
 
-    def deliver(self, timestamp:time):
+    def deliver(self, timestamp: time):
         self.delivery_time = timestamp
         self.status = 'Delivered'
