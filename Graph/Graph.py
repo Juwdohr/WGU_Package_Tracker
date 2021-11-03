@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import field, dataclass
-from typing import Optional
+from typing import Optional, Dict
 
 from .Vertex import Vertex
 
@@ -8,8 +8,8 @@ from .Vertex import Vertex
 @dataclass
 class Graph(ABC):
     """Abstract class defining a graph"""
-    adjacency_list: dict['Vertex', list['Vertex']] = field(init=False, default_factory=dict)
-    edge_weights: dict[(Vertex, Vertex), float] = field(init=False, default_factory=dict)
+    adjacency_list: Dict['Vertex', list['Vertex']] = field(init=False, default_factory=Dict)
+    edge_weights: Dict[(Vertex, Vertex), float] = field(init=False, default_factory=Dict)
 
     @abstractmethod
     def __repr__(self) -> str:
