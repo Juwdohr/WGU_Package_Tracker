@@ -1,15 +1,16 @@
 from abc import ABC, abstractmethod
 from dataclasses import field, dataclass
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, NewType, Tuple
 
 from .Vertex import Vertex
 
+VertexTuple = NewType('VertexTuple', Tuple[Vertex, Vertex])
 
 @dataclass
 class Graph(ABC):
     """Abstract class defining a graph"""
     adjacency_list: Dict['Vertex', List['Vertex']] = field(init=False, default_factory=dict)
-    edge_weights: dict[(Vertex, Vertex), float] = field(init=False, default_factory=dict)
+    edge_weights: Dict[VertexTuple, float] = field(init=False, default_factory=dict)
 
     @abstractmethod
     def __repr__(self) -> str:
