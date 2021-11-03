@@ -3,8 +3,15 @@ from .Graph import Graph
 from .Directed import Directed
 from .Undirected import Undirected
 
+
 # Dijkstra shortest path
-def dijkstra_shortest_path(g, start_vertex):
+def find_shortest_paths(g: Graph, start_vertex: Vertex) -> None:
+    """
+    Algorithm to find the shortest path from point a to point b in a graph.
+    :param g: Graph for which Dijkstra's algorithm is ran against
+    :param start_vertex: starting point of graph
+    :return: none
+    """
     # Put all vertices in an unvisited queue.
     unvisited_queue = []
 
@@ -39,3 +46,24 @@ def dijkstra_shortest_path(g, start_vertex):
             if alternative_path_distance < adj_vertex.distance:
                 adj_vertex.distance = alternative_path_distance
                 adj_vertex.previous_vertex = current_vertex
+
+
+def build(data: dict, graph: Graph):
+    """
+    Builds a graph from a dictionary of data.
+    :param data: Incoming data to convert into a graph
+    :param graph: Graph structure into which the data is being placed
+    :return: None
+    """
+    # This is the Distance Table to make a graph from
+    for name in data.fieldnames:
+        if name != '':
+            graph.add_vertex(Vertex(name.strip().split('\n')[0]))
+
+    for line_item in data:
+        start_vertex = graph.find_vertex(line_item.pop('').strip().split('\n')[0])
+
+        for key in line_item:
+            graph.add_undirected_edge(start_vertex,
+                                      graph.find_vertex(key.strip().split('\n')[0]),
+                                      float(line_item[key]))
