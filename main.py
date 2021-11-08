@@ -1,5 +1,6 @@
 import csv
 from datetime import time, datetime
+from typing import List, Union
 
 import Graph
 import HashTable
@@ -198,15 +199,16 @@ def main():
 
 def lookup_single_package(package_id: int, lookup_time: time) -> None:
     package = packages.search(package_id)
+    data = [package.id, package.address, package.city, package.postal_code, package.delivery_deadline, package.mass]
+
     if lookup_time < package.departure_time or package.departure_time is None:
         status = Status.AT_HUB if 'delayed' not in package.notes.lower() else Status.DELAYED
-        print(package_id, status)
+        print(package, status.name)
     elif package.departure_time < lookup_time < package.delivery_time:
         status = Status.EN_ROUTE
-        print(package_id, status)
+        print(package, status.name)
     elif package.delivery_time < lookup_time:
-        status = package.status
-        print(package_id, status)
+        print(package, package.status.name, package.delivery_time)
     else:
         print('Time not recognized please try again')
 
@@ -214,7 +216,6 @@ def lookup_single_package(package_id: int, lookup_time: time) -> None:
 def lookup_all_packages(lookup_time: time) -> None:
     for package_id in range(1, len(packages) + 1):
         lookup_single_package(package_id, lookup_time)
-
 
 def user_interface():
     print("Welcome to the WGUPS Package Delivery System")
@@ -225,17 +226,19 @@ def user_interface():
         print("1. Get Specific Package Data")
         print("2. Get All Package Data")
         print("3. Exit")
-        user_input = input("> ")
+        user_input = int(input("> "))
 
-        if user_input == '1':
+        if user_input == 1:
             package_id = int(input("Please enter the Package ID to lookup: "))
             lookup_time = datetime.strptime(input("Please enter a time in 24 hour format (HH:mm):  "), '%H:%M').time()
             lookup_single_package(package_id, lookup_time)
             continue
-        if user_input == '2':
+
+        if user_input == 2:
             print('Getting all Package Data...')
             lookup_time = datetime.strptime(input("Please enter a time in 24 hour format (HH:mm):  "), '%H:%M').time()
             lookup_all_packages(lookup_time)
+            continue
 
     print("Goodbye")
     exit()

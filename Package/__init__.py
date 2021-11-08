@@ -41,17 +41,14 @@ class Package:
 
     def __str__(self):
         """String representation of Package"""
-        if self.delivery_time is None:
-            return f'ID: {self.id}\nDeadline: {self.delivery_deadline}\nStatus: {self.status}'
-        return f'ID: {self.id}\nDeadline: {self.delivery_deadline}\nStatus: {self.status} @ {self.delivery_time}'
-
+        return f'{self.id} {self.delivery_address} {self.mass} {self.delivery_deadline}'
     @property
     def delivery_address(self) -> str:
         """
         Represents the address, built from all known parts
         :return: String representation of the address
         """
-        return f'{self.address}\n{self.city}, {self.state} {self.postal_code}'
+        return f'{self.address}, {self.city}, {self.state} {self.postal_code}'
 
     @delivery_address.setter
     def delivery_address(self, updated_delivery_address: str) -> None:
@@ -64,7 +61,7 @@ class Package:
         self.city, rest = rest.split(', ')
         self.state, self.postal_code = rest.split(' ')
 
-    def deliver(self, timestamp: time):
+    def deliver(self, timestamp: time) -> bool:
         """
         Marks the package as delivered and sets the time it was delivered
         :param timestamp: Time that it was delivered

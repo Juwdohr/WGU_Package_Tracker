@@ -27,6 +27,8 @@ class Truck:
         :param item: Package to be added onto truck
         :return: True if package is not already on the truck, and the truck
         has space to add package, otherwise False
+
+
         """
         # clear out the delivered packages
         undelivered_packages = [package for package in self.cargo if package.status != Status.DELIVERED]
