@@ -1,14 +1,14 @@
 # DATA STRUCTURES AND ALGORITHMS II — C950
-####PRFA — NHP2
+#### PRFA — NHP2
 ### WGU_Package_Tracker
-##COMPETENCIES
+## COMPETENCIES
 #### 4048.5.1 : Non-Linear Data
 The graduate creates software applications that incorporate non-linear data structures for efficient and maintainable software.
 #### 4048.5.2 : Hashing Algorithms and Structures
 The graduate writes code using hashing techniques within an application to perform searching operations.
 #### 4048.5.3 : Dictionaries and Sets
 The graduate incorporates dictionaries and sets in order to organize data into key-value pairs.
-####4048.5.4 : Self-Adjusting Data Structures
+#### 4048.5.4 : Self-Adjusting Data Structures
 The graduate evaluates the space and time complexity of self-adjusting data structures using big-O notation to improve the performance of applications.
 #### 4048.5.5 : Self-Adjusting Heuristics
 The graduate writes code using self-adjusting heuristics to improve the performance of applications.
@@ -36,7 +36,7 @@ Keep in mind that the supervisor should be able to see, at assigned points, the 
 * The delivery address for package #9, Third District Juvenile Court, is wrong and will be corrected at 10:20 a.m. WGUPS is aware that the address is incorrect and will be updated at 10:20 a.m. However, WGUPS does not know the correct address (410 S State St., Salt Lake City, UT 84111) until 10:20 a.m.
 * The distances provided in the WGUPS Distance Table are equal regardless of the direction traveled.
 * The day ends when all 40 packages have been delivered.
-* 
+
 ## REQUIREMENTS
 Your submission must be your original work. No more than a combined total of 30% of the submission and no more than a 10% match to any one individual source can be directly quoted or closely paraphrased from sources, even if cited correctly. An originality report is provided when you submit your task that can be used as a guide.
 
