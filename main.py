@@ -190,11 +190,10 @@ def main():
               f'\tTruck {truck.id} finished at {format(truck.time, "%I:%M %p")}')
         total_distance += truck.trip_odometer
     print(f'Total: {round(total_distance, 1)}')
-    #
-    if total_distance < 140:
-        for i in range(1, len(packages) + 1):
-            package = packages.search(i)
-            print(package)
+
+    for i in range(1, len(packages) + 1):
+        package = packages.search(i)
+        print(package)
 
 
 def lookup_single_package(package_id: int, lookup_time: time) -> None:

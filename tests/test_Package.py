@@ -26,7 +26,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_update_address(self):
         self.package_9.delivery_address = "410 S State St\nSalt Lake City, UT 84111"
-        self.assertEqual(self.package_9.delivery_address, "410 S State St\nSalt Lake City, UT 84111")
+        self.assertEqual(self.package_9.delivery_address, "410 S State St, Salt Lake City, UT 84111")
 
 
 if __name__ == '__main__':
