@@ -60,7 +60,7 @@ class ChainedHashTable:
                 return True
 
         # if not, insert the item to the end of the bucket list.
-        key_value = (key, item)
+        key_value = [key, item]
         bucket_list.append(key_value)
         return True
 
