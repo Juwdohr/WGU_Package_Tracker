@@ -1,1 +1,1 @@
-from .Truck import Truck
+from .truck import Truck

@@ -1,13 +1,14 @@
-from .Vertex import Vertex
-from .Graph import Graph
-from .Directed import Directed
-from .Undirected import Undirected
+from .vertex import Vertex
+from .graph import Graph
+from .directed import Directed
+from .undirected import Undirected
 
 
 # Dijkstra shortest path
 def find_shortest_paths(g: Graph, start_vertex: Vertex) -> None:
     """
     Algorithm to find the shortest path from point a to point b in a graph.
+    Time Complexity: O(n^2)
     :param g: Graph for which Dijkstra's algorithm is ran against
     :param start_vertex: starting point of graph
     :return: none
@@ -33,11 +34,13 @@ def find_shortest_paths(g: Graph, start_vertex: Vertex) -> None:
             if unvisited_queue[i].distance < unvisited_queue[smallest_index].distance:
                 smallest_index = i
         current_vertex = unvisited_queue.pop(smallest_index)
-        # print("From Start Vetex to current_vertex.label: " + current_vertex.label +" distance: " + str(current_vertex.distance))
+        # print("From Start Vetex to current_vertex.label: " + current_vertex.label +" distance: " + str(
+        # current_vertex.distance))
 
         # Check potential path lengths from the current vertex to all neighbors.
         for adj_vertex in g.adjacency_list[current_vertex]:  # values from  dictionary
-            # if current_vertex = vertex_1 => adj_vertex in [vertex_2, vertex_3], if vertex_2 => adj_vertex in [vertex_6], ...
+            # if current_vertex = vertex_1 => adj_vertex in [vertex_2, vertex_3], if vertex_2 => adj_vertex in [
+            # vertex_6], ...
             edge_weight = g.edge_weights[(current_vertex, adj_vertex)]  # values from dictionary
             # edge_weight = 484 then 626 then 1306, ...}
             alternative_path_distance = current_vertex.distance + edge_weight
@@ -46,24 +49,3 @@ def find_shortest_paths(g: Graph, start_vertex: Vertex) -> None:
             if alternative_path_distance < adj_vertex.distance:
                 adj_vertex.distance = alternative_path_distance
                 adj_vertex.previous_vertex = current_vertex
-
-
-def build(data: dict, graph: Graph):
-    """
-    Builds a graph from a dictionary of data.
-    :param data: Incoming data to convert into a graph
-    :param graph: Graph structure into which the data is being placed
-    :return: None
-    """
-    # This is the Distance Table to make a graph from
-    for name in data.fieldnames:
-        if name != '':
-            graph.add_vertex(Vertex(name.strip().split('\n')[0]))
-
-    for line_item in data:
-        start_vertex = graph.find_vertex(line_item.pop('').strip().split('\n')[0])
-
-        for key in line_item:
-            graph.add_undirected_edge(start_vertex,
-                                      graph.find_vertex(key.strip().split('\n')[0]),
-                                      float(line_item[key]))

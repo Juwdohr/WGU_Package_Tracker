@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import field, dataclass
 from typing import Optional, Dict, List, NewType, Tuple
 
-from .Vertex import Vertex
+from .vertex import Vertex
 
 VertexTuple = NewType('VertexTuple', Tuple[Vertex, Vertex])
 
@@ -23,6 +23,7 @@ class Graph(ABC):
     def add_vertex(self, new_vertex) -> None:
         """
         Adds a Vertex to the graph
+        Time Complexity: O(1)
         :param new_vertex: Vertex to add to graph
         :return: None
         """
@@ -31,12 +32,12 @@ class Graph(ABC):
     def find_vertex(self, label: str) -> Optional[Vertex]:
         """
         Function to find a graph
+        Time Complexity: O(n)
         :param label: Label of Vertex to find
         :return: Vertex with corresponding label
         """
         for key in self.adjacency_list:
-            if key.label != label:
-                continue
-            return key
+            if key.label == label:
+                return key
         return None
 

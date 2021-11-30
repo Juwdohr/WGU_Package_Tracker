@@ -17,13 +17,18 @@ class Truck:
     location: Vertex = field(init=False, repr=False)
 
     def __post_init__(self):
-        """Sets default location, and parses correct data types"""
+        """
+        Sets default location, and parses correct data types
+        Time Complexity: O(1)
+        :return:
+        """
         self.id = int(self.id)
         self.location = self.map.find_vertex('HUB')
 
     def load(self, item: Package) -> bool:
         """
         Function to represent loading truck with packages
+        Time Complexity: 0(n * log n)
         :param item: Package to be added onto truck
         :return: True if package is not already on the truck, and the truck
         has space to add package, otherwise False
@@ -47,6 +52,7 @@ class Truck:
         """
         Moves Truck to the next location and updates the Trip Odometer
         and the Trucks Clock
+        Time Complexity: O(1)
         :param next_location: Vertex of next package delivery location
         :return: None
         """
@@ -56,9 +62,10 @@ class Truck:
 
         self.time = (datetime.combine(datetime.today(), self.time) + timedelta(hours=(distance_traveled / self.SPEED))).time()
 
-    def deliver_package(self, package: Package) -> None:
+    def deliver_package(self, package: Package) -> bool:
         """
         Marks the package as delivered with a time stamp
+        Time Complexity: O(1)
         :param package: Package to be delivered
         :return: None
         """

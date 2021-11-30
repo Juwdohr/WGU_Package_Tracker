@@ -1,6 +1,6 @@
 import unittest
 from Graph import Directed, Undirected, Vertex
-from Graph.Graph import Graph
+from Graph.graph import Graph
 
 
 def link_vertices(vertex_a, vertex_b, weight):

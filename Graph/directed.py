@@ -10,7 +10,8 @@ class Directed(Graph):
     def add_directed_edge(self, from_vertex: Vertex, to_vertex: Vertex, weight: float = 1.0) -> None:
         """
         Function to a directed edge to a graph
-        :param from_vertex: Starting Vertes
+        Time Complexity: O(1)
+        :param from_vertex: Starting Vertex
         :param to_vertex: Ending Vertex
         :param weight: Weight to drive to Vertex
         :return: None
