@@ -210,10 +210,9 @@ def lookup_single_package(package_id: int, lookup_time: time) -> None:
         status = Status.AT_HUB if 'delayed' not in package.notes.lower() else Status.DELAYED
         print(package, status.name)
     elif package.departure_time < lookup_time < package.delivery_time:
-        status = Status.EN_ROUTE
-        print(package, status.name)
+        print(package, Status.EN_ROUTE.name)
     elif package.delivery_time < lookup_time:
-        print(package, package.status.name, package.delivery_time)
+        print(package, f', {package.status.name} @ {package.delivery_time}')
     else:
         print('Time not recognized please try again')
 
@@ -280,9 +279,9 @@ def main() -> None:
     # Deliver Packages
     for truck in fleet:
         if truck.id == 1:
-            truck.time = time(8, 30)
+            truck.time = time(8, 0)
         if truck.id == 2:
-            truck.time = time(9, 15)
+            truck.time = time(9, 5)
         if truck.id == 3:
             truck.time = fleet[0].time
 
