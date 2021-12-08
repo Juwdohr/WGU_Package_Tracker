@@ -9,14 +9,13 @@ from . import Directed, Vertex
 class Undirected(Directed):
     """Represents an Undirected Graph"""
 
-    def build_graph(self, data: csv.DictReader):
+    def build_edges(self, data):
         """
-        Creates all edges from the graph.
-        Time Complexity: O(n)
-        :param data:
-        :param graph:
-        :return:
-        """
+           Creates all edges from the graph.
+           Time Complexity: O(n)
+           :param data: Data from CSV file
+           :return:
+           """
         for row in data:
             start_vertex = self.find_vertex(row.pop('').strip().split('\n')[0])
             for name, distance in row.items():
