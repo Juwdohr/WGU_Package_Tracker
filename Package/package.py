@@ -11,6 +11,7 @@ class Status(Enum):
     EN_ROUTE = auto()
     DELIVERED = auto()
 
+
 @dataclass
 class Package:
     """Represents a package to be delivered"""
@@ -49,7 +50,7 @@ class Package:
         Time Complexity: O(1)
         :return: str = Representation of a package
         """
-        return f'{self.id} {self.delivery_address} {self.mass} {self.delivery_deadline}'
+        return f'{self.id}, "{self.delivery_address}", {self.mass}, {self.delivery_deadline}'
 
     @property
     def delivery_address(self) -> str:
