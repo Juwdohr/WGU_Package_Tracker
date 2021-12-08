@@ -7,16 +7,21 @@ from .vertex import Vertex
 @dataclass
 class Graph(ABC):
     """Abstract class defining a graph"""
-    adjacency_list: Dict['Vertex', List['Vertex']] = field(init=False, default_factory=dict)
-    edge_weights: Dict['tuple[Vertex, Vertex]', float] = field(init=False, default_factory=dict)
-
     @abstractmethod
     def __repr__(self) -> str:
-        pass
+        """String representation of how the graph is instantiated"""
 
     @abstractmethod
     def __str__(self) -> str:
-        pass
+        """Represents the Graph as a string"""
+
+    @abstractmethod
+    def extract_vertices(self, data):
+        """Extracts data to create the vertices"""
+
+    @abstractmethod
+    def build_edges(self, data):
+        """Extracts data to create the edges of the graph"""
 
     def add_vertex(self, new_vertex) -> None:
         """

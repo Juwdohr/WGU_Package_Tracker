@@ -113,7 +113,7 @@ The complete Time and Space Complexity for the Program should be O(n log n)
 | deliver_packages      |          O(n^2) |
 | find_next_deliverable |            O(n) |
 | get_priority_queue    |            O(n) |
-| closest_package       |            O(n) |
+| get_next_package       |            O(n) |
 
 | Graph/\_\_init__    | Time Complexity |
 |---------------------|----------------:|

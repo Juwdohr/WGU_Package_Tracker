@@ -56,16 +56,8 @@ def load_distances() -> Graph.Undirected:
     graph = Graph.Undirected()
 
     if data is not None:
-        for name in data.fieldnames:
-            if name != '':
-                graph.add_vertex(Graph.Vertex(name.strip().split('\n')[0]))
-
-        for row in data:
-            start_vertex = graph.find_vertex(row.pop('').strip().split('\n')[0])
-            for name, distance in row.items():
-                if name != '':
-                    end_vertex = graph.find_vertex(name.strip().split('\n')[0])
-                    graph.add_undirected_edge(start_vertex, end_vertex, float(distance))
+        graph.extract_vertices(data)
+        graph.build_edges(data)
 
     return graph
 

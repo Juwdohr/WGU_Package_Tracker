@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>C950 WGUPS Algorithim OverView</title>
+        <style>
+/* From extension vscode.markdown-math */
+@font-face{font-family:KaTeX_AMS;src:url(fonts/KaTeX_AMS-Regular.woff2) format("woff2"),url(fonts/KaTeX_AMS-Regular.woff) format("woff"),url(fonts/KaTeX_AMS-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Bold.woff2) format("woff2"),url(fonts/KaTeX_Caligraphic-Bold.woff) format("woff"),url(fonts/KaTeX_Caligraphic-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Regular.woff2) format("woff2"),url(fonts/KaTeX_Caligraphic-Regular.woff) format("woff"),url(fonts/KaTeX_Caligraphic-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Bold.woff2) format("woff2"),url(fonts/KaTeX_Fraktur-Bold.woff) format("woff"),url(fonts/KaTeX_Fraktur-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Regular.woff2) format("woff2"),url(fonts/KaTeX_Fraktur-Regular.woff) format("woff"),url(fonts/KaTeX_Fraktur-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Bold.woff2) format("woff2"),url(fonts/KaTeX_Main-Bold.woff) format("woff"),url(fonts/KaTeX_Main-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-BoldItalic.woff2) format("woff2"),url(fonts/KaTeX_Main-BoldItalic.woff) format("woff"),url(fonts/KaTeX_Main-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Italic.woff2) format("woff2"),url(fonts/KaTeX_Main-Italic.woff) format("woff"),url(fonts/KaTeX_Main-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Regular.woff2) format("woff2"),url(fonts/KaTeX_Main-Regular.woff) format("woff"),url(fonts/KaTeX_Main-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Math;src:url(fonts/KaTeX_Math-BoldItalic.woff2) format("woff2"),url(fonts/KaTeX_Math-BoldItalic.woff) format("woff"),url(fonts/KaTeX_Math-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}@font-face{font-family:KaTeX_Math;src:url(fonts/KaTeX_Math-Italic.woff2) format("woff2"),url(fonts/KaTeX_Math-Italic.woff) format("woff"),url(fonts/KaTeX_Math-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Bold.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Bold.woff) format("woff"),url(fonts/KaTeX_SansSerif-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Italic.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Italic.woff) format("woff"),url(fonts/KaTeX_SansSerif-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Regular.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Regular.woff) format("woff"),url(fonts/KaTeX_SansSerif-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Script;src:url(fonts/KaTeX_Script-Regular.woff2) format("woff2"),url(fonts/KaTeX_Script-Regular.woff) format("woff"),url(fonts/KaTeX_Script-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size1;src:url(fonts/KaTeX_Size1-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size1-Regular.woff) format("woff"),url(fonts/KaTeX_Size1-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size2;src:url(fonts/KaTeX_Size2-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size2-Regular.woff) format("woff"),url(fonts/KaTeX_Size2-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size3;src:url(fonts/KaTeX_Size3-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size3-Regular.woff) format("woff"),url(fonts/KaTeX_Size3-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size4;src:url(fonts/KaTeX_Size4-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size4-Regular.woff) format("woff"),url(fonts/KaTeX_Size4-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Typewriter;src:url(fonts/KaTeX_Typewriter-Regular.woff2) format("woff2"),url(fonts/KaTeX_Typewriter-Regular.woff) format("woff"),url(fonts/KaTeX_Typewriter-Regular.ttf) format("truetype");font-weight:400;font-style:normal}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;text-indent:0;text-rendering:auto;border-color:currentColor}.katex *{-ms-high-contrast-adjust:none!important}.katex .katex-version:after{content:"0.13.0"}.katex .katex-mathml{position:absolute;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-weight:700;font-style:italic}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{display:inline-table;table-layout:fixed;border-collapse:collapse}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;vertical-align:bottom;position:relative}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;vertical-align:bottom;font-size:1px;width:2px;min-width:2px}.katex .vbox{display:inline-flex;flex-direction:column;align-items:baseline}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{width:0;max-width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{display:inline-block;width:100%;border-bottom-style:solid}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .clap,.katex .llap,.katex .rlap{width:0;position:relative}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{display:inline-block;border:0 solid;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{display:inline-block;width:100%;border-bottom-style:solid}.katex .hdashline{display:inline-block;width:100%;border-bottom-style:dashed}.katex .sqrt>.root{margin-left:.27777778em;margin-right:-.55555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.83333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.16666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.33333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.66666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.45666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.14666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.71428571em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.85714286em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.14285714em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.28571429em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.42857143em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.71428571em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.05714286em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.46857143em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.96285714em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.55428571em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.55555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.66666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.77777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.88888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.11111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.33333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.30444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.76444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.41666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.58333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.66666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.83333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.72833333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.07333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.34722222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.41666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.48611111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.55555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.69444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.83333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.44027778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.72777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.28935185em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.34722222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.40509259em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.46296296em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.52083333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.69444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.83333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.20023148em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.43981481em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.24108004em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.28929605em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.33751205em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.38572806em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.43394407em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.48216008em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.57859209em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.69431051em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.83317261em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.19961427em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.20096463em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.24115756em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.28135048em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.32154341em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.36173633em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.40192926em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.48231511em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.57877814em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.69453376em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.83360129em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{display:block;position:absolute;width:100%;height:inherit;fill:currentColor;stroke:currentColor;fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex svg path{stroke:none}.katex img{border-style:none;min-width:0;min-height:0;max-width:none;max-height:none}.katex .stretchy{width:100%;display:block;position:relative;overflow:hidden}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{width:100%;position:relative;overflow:hidden}.katex .halfarrow-left{position:absolute;left:0;width:50.2%;overflow:hidden}.katex .halfarrow-right{position:absolute;right:0;width:50.2%;overflow:hidden}.katex .brace-left{position:absolute;left:0;width:25.1%;overflow:hidden}.katex .brace-center{position:absolute;left:25%;width:50%;overflow:hidden}.katex .brace-right{position:absolute;right:0;width:25.1%;overflow:hidden}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{box-sizing:border-box;border:.04em solid}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{box-sizing:border-content;border-top:.049em solid;border-right:.049em solid;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{counter-increment:katexEqnNo;content:"(" counter(katexEqnNo) ")"}.katex .mml-eqn-num:before{counter-increment:mmlEqnNo;content:"(" counter(mmlEqnNo) ")"}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;position:absolute;left:calc(50% + .3em);text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{text-align:left;padding-left:2em}body{counter-reset:katexEqnNo mmlEqnNo}
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.katex-error {
+	color: var(--vscode-editorError-foreground);
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="c950-wgups-algorithim-overview">C950 WGUPS Algorithim OverView</h1>
+<h6 id="author-joshua-dix-001340233wgu-email-jdix10wguedu11242021-course-c950-data-structures-and-algorithms-ii">Author: Joshua Dix (001340233)<br>WGU Email: <a href="mailto:jdix10@wgu.edu">jdix10@wgu.edu</a><br>11/24/2021<br> Course: C950 Data Structures and Algorithms II</h6>
+<h2 id="stated-problem">Stated Problem</h2>
+<p>Create an algorithm for Western Governors University Parcel Service (WGUPS) to determine the best route and delivery
+distribution for their Salt Lake City Daily Loval Deliveries. Packages are currently not being delivered by their
+promised deadline and a more efficient and accurate solution is necessary. The Salt Lake City route is covered by three
+(3) trucks, two (2) drivers, and has a daily average of approximately 40 packages.</p>
+<h3 id="assumptions">Assumptions</h3>
+<p>The following are the constraints imposed on the WGUpS delivery service:</p>
+<ul>
+<li>Each truck can carry a maximum of 16 packages, and</li>
+<li>Trucks travel at an average speed of 18 MPH</li>
+<li>Trucks have an &quot;infinite amount of gas&quot; with no need to stop.</li>
+<li>The ID number of each package is unique; there are no collisions.</li>
+<li>Each driver stays with the same truck as long as that truck is in service.</li>
+<li>Drivers leave the hub no earlier than 8:00 a.m., with the truck loaded, and can return to the hub for packages if needed.</li>
+<li>Delivery and loading times are instantaneous, i.e., no time passes while at a delivery or when moving packages to a
+truck at the hub (that time is factored into the calculation of the average speed of the trucks).</li>
+<li>There is up to one special note associated with a package.</li>
+<li>The wrong delivery address for package #9, Third District Juvenile Court, will be corrected at 10:20 a.m. The correct
+address is 410 S State St., Salt Lake City, UT 84111.</li>
+<li>The distances provided in the WGUPS Distance Table are equal regardless of the direction traveled.</li>
+<li>The day ends when all 40 packages have been delivered.</li>
+</ul>
+<h3 id="restrictions">Restrictions</h3>
+<p>Each package may have one special requirement that must be addressed by the WGUPS. The following are possible restrictions
+that may be imposed on a given package:</p>
+<ul>
+<li>The package must be delivered with other packages (e.g. on the same truck)</li>
+<li>The package must be delivered by a specific truck</li>
+<li>The package has a specific deadline by which it must be delivered</li>
+<li>The package is delayed in arriving to the depot and will not be available for pickup until later in the day.</li>
+</ul>
+<h2 id="algorithm">Algorithm</h2>
+<h6 id="a-algorithm-selection">A: Algorithm Selection</h6>
+<p>The algorithm used within project is Dijkstra's algorithm, which is a variant of the closest neighbor algorithm known as the Branch and Bound Method.</p>
+<h6 id="b1-logic-comments">B1: Logic Comments</h6>
+<pre><code class="language-text"><div>Load Packages from file
+Load Distances from file
+Create a fleet of trucks
+Load trucks based off of Postal Codes
+Set departure time for trucks while looping through them
+Deliver packages
+    Check for and pickup delayed packages at specific intervals
+    Set all package status on the truck to En Route, and departure time to time of the truck.
+    Check if package has wrong address
+        correct if needed
+    get next location from the current package
+    if next location is not the current truck location
+        use dijksta&#x27;s algorithim to find the shortest distances
+        drive to next location
+    deliver package
+    repeat until all pacakges are delivered
+Run the user interface
+    Get User option
+        1 for single package lookup
+        2 for all packages lookup
+        3 to exit
+    if option 1 or 2:
+        get user options (Time and Package for option 1)
+        Display information
+    if option 3:
+        exit application
+</div></code></pre>
+<h6 id="b2-development-environment">B2: Development Environment</h6>
+<p>This application was developed using Python 3.9, and written using Pycharm; but was tested on 3.7, 3.8, and 3.10 using Github Actions. The computer
+used to build and design this program was a Dell Latitude 7480 with an Intel® Core™ i5-6300U CPU @ 2.40GHz 2.50 GHz,
+with 8GB of Ram.</p>
+<h6 id="b3-space-time-and-big-o">B3: Space-Time and Big-O</h6>
+<p>I have included in the code the time complexities for each function in the Docstrings, but I have also included them here.
+The complete Time and Space Complexity for the Program should be O(n log n)</p>
+<table>
+<thead>
+<tr>
+<th><a href="http://main.py">main.py</a></th>
+<th style="text-align:right">Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>main</td>
+<td style="text-align:right">O(n^2)</td>
+</tr>
+<tr>
+<td>load_file</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>load_distances</td>
+<td style="text-align:right">O(n^2)</td>
+</tr>
+<tr>
+<td>load_packages</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Courier/hub.py</th>
+<th style="text-align:right">Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>__post_init__</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>get_packages_by_postal</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>release_trucks</td>
+<td style="text-align:right">O(n^2)</td>
+</tr>
+<tr>
+<td>run_deliveries</td>
+<td style="text-align:right">O(n^2)</td>
+</tr>
+<tr>
+<td>load_truck</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>pickup_delayed_packages</td>
+<td style="text-align:right">O(n^2)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Package/package.py</th>
+<th style="text-align:right">Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>__post_init__</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>__str__</td>
+<td style="text-align:right">o(1)</td>
+</tr>
+<tr>
+<td>delivery_address</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>delivery_address</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>deliver</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Vehicle/truck.py</th>
+<th style="text-align:right">Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>__post_init__</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>load</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>drive</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>deliver_package</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>set_departure</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>deliver_packages</td>
+<td style="text-align:right">O(n^2)</td>
+</tr>
+<tr>
+<td>find_next_deliverable</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>get_priority_queue</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>get_next_package</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Graph/__init__</th>
+<th style="text-align:right">Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>find_shortest_paths</td>
+<td style="text-align:right">O(n^2)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Graph/directed.py</th>
+<th style="text-align:right">Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_undirected_edge</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>__repr__</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>__str__</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Graph/graph.py</th>
+<th style="text-align:right">Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_vertex</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>find_vertex</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Graph/undirected.py</th>
+<th style="text-align:right">Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_undirected_edge</td>
+<td style="text-align:right">O()</td>
+</tr>
+<tr>
+<td>__repr__</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>__str__</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Graph/vertex.py</th>
+<th style="text-align:right">Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>__post_init__</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+<tr>
+<td>reset</td>
+<td style="text-align:right">O(1)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>HashTable/chained.py</th>
+<th style="text-align:right">Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>__post_init__</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>__len__</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>__iter__</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>insert</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>search</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>remove</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>UI/user_interface.py</th>
+<th style="text-align:right">Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>print_header</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>lookup_single_package</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>lookup_all_packages</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+<tr>
+<td>run</td>
+<td style="text-align:right">O(n)</td>
+</tr>
+</tbody>
+</table>
+<h6 id="b4-adaptability">B4: Adaptability</h6>
+<p>The application, with the increasing number of packages, should adapt well due to its self-adjusting algorithm and data-structure.
+At this time I feel like it would not scale well because of the sorting done to the packages to get them sorted as this
+happens within O(n * log n) time.</p>
+<h6 id="b5-efficiency-and-maintainability">B5: Efficiency and Maintainability</h6>
+<p>As for the efficiency of the program it runs within O(n * log n) due to the sort methods place upon the truck loads.</p>
+<p>For the maintainability, I believe this could be maintained easily by other developers due to the
+compartmentalization and the code comments. This can be done through refactoring and compartmentalizing, and using better
+design patterns. I would like to see this done in future iterations of my application.</p>
+<h6 id="b6-self-adjusting-data-structures">B6: Self-Adjusting Data Structures</h6>
+<p>The self adjusting data structure that was used was the hash table.</p>
+<table>
+<thead>
+<tr>
+<th>Strengths</th>
+<th>Weaknesses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Speed in which to access items</td>
+<td>Does not allow null or empty values</td>
+</tr>
+<tr>
+<td>Average Time Complexity O(1)</td>
+<td>Worse Case Time Complexity O(n)</td>
+</tr>
+<tr>
+<td>Insertion Time Complexity = O(1)</td>
+<td>loop through items in order to search linked lists</td>
+</tr>
+<tr>
+<td>Can grow infinitely as long as there is enough space</td>
+<td>linearly slower as the load factor increases</td>
+</tr>
+<tr>
+<td>Never need to be resized</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-structures">Data Structures</h2>
+<h6 id="d-data-structure-d1-explanation-of-data-structure">D: Data Structure, D1: Explanation of Data Structure</h6>
+<p>The Data structure used with the project is a Chained Hash Table. This can adapt to any number of packages.</p>
+<h5 id="storing-data">Storing Data</h5>
+<p>The Chained hash table stores tables in &quot;buckets&quot;. These &quot;buckets&quot; are created at the creation of the hash table with n
+buckets. Upon hashing and modulating the id you get a key, this is an integer of 1 - n-1, and is used both to choose the
+bucket in which the data is stored, and to look up the data. The data is then added to the bucket as a tuple.</p>
+<h5 id="retrieval-of-data">Retrieval of Data</h5>
+<p>Once the data is stored within a &quot;bucket&quot;, to retrieve it simply pass in the ID of the package. The hash table will hash
+and modulate this ID, then using the hash and modulated ID as the key to the bucket will then loop through the bucket
+looking at the first value in each tuple, which is the ID. If the ID is the same it returns the item in the tuple.</p>
+<h3 id="comparison-to-linear-search">Comparison to Linear search</h3>
+<p>Both the storing into and the retrieval of the data in the hash table than in a linear search as it breaks up the number
+of packages and has a key to find each .item. This can speed up the look-up as the number of items in each bucket
+approaches 1.</p>
+<h3 id="discussion">Discussion</h3>
+<h6 id="k1-verification-of-data-structure">K1: Verification of Data Structure</h6>
+<p>All packages are delivered under 140, coming in at 95.5 miles. All but three packages were delivered on time, and the 3
+that were late in delivery were only minutes off this is due to package specifications. You can verify this in the
+screenshots provided, as well as through the provided user interface at the beginning and by selecting all packages and
+providing a time to look up the packages and see the reporting statuses. This also proves that an efficient hash-table,
+with a look-up function is present.</p>
+<h6 id="k1a-efficiency">K1A: Efficiency</h6>
+<p>The Big-O notation for the look-up function is O(n) meaning that for each package added to a stack that it will need to
+take a look at each object in the hash table, this can be brought down to nil if you could figure out the number of
+packages and change the starting number of buckets accordingly. Currently, this is automatically set to 10 but if you
+were able to increase/decrease this number to match the number or a multiplicand of the number you could bring this down
+to a constant.</p>
+<h6 id="k1b-overhead">K1B: Overhead</h6>
+<p>Adding packages will increase the size of the hash table, along with using more space. Buckets will also increase if
+there is more packages depending on the hashing.</p>
+<h6 id="k1c-implications">K1C: Implications</h6>
+<p>Due to the design and how I am loading the trucks and visiting each stop in this algorithm, neither adding trucks nor
+cities would affect the look-up time and the space usage.</p>
+<h6 id="k2-other-data-structures-k2a-data-structure-differences">K2: Other Data Structures, K2A: Data Structure Differences</h6>
+<p>A dictionary would have had a time complexity of O(1), as if I used the ID as the key, then I could do use the square
+bracket notation as part of the lookup. This would also greatly reduce the overhead coding as the dict type is built into
+python.</p>
+<p>The other type of data structure I could have implemented was a linear probing hash table. This would have made the look-up
+and insert functions slower. For insert, it would have to hash the ID and if there was an item already in that spot then
+it would need to look for the next available slot. For look-up, it would need to be able to find the first bucket and then
+look at each item to see if the keys were the same.</p>
+<h2 id="algorithm-1">Algorithm</h2>
+<h6 id="i1-strengths-of-the-chosen-algorithm">I1: Strengths of the Chosen Algorithm</h6>
+<p>My algorithms strengths lay within it's simplicity and efficiency as most deliveries are grouped within a geographical
+location. This helps its ability lower the distances and with time frames as all the deliveries are relatively close together.</p>
+<h6 id="i2-verification-of-algorithm-k1-verification-of-data-structure">I2: Verification of Algorithm, K1: Verification of Data Structure</h6>
+<p>All packages are delivered under 140, coming in at 128.2 miles. All but three packages were delivered on time, and the 3
+that were late in delivery were only minutes off this is due to package specifications. You can verify this in the
+screenshots provided, as well as through the provided user interface at the beginning and by selecting all packages and
+providing a time to look up the packages.</p>
+<h6 id="i3-other-possible-algorithms">I3: Other possible Algorithms</h6>
+<p>Other possible algorithms that could meet the scenario's requirements are the The Brute-Force Approach, or the Nearest
+Neighbor Method.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">The Brute Force Algorithm</th>
+<th style="text-align:center">The Branch and Bound Method</th>
+<th style="text-align:center">Nearest Neighbor Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Time-Complexity</td>
+<td style="text-align:center">O(n * m)</td>
+<td style="text-align:center">O(n²)</td>
+<td style="text-align:center">O(n²)</td>
+</tr>
+<tr>
+<td style="text-align:center">Advantages</td>
+<td style="text-align:center">Finds all possible routes</td>
+<td style="text-align:center">steps broken into several smaller problems</td>
+<td style="text-align:center">Always finds nearest neighbor</td>
+</tr>
+</tbody>
+</table>
+<h2 id="screenshots">Screenshots</h2>
+<h6 id="g1-1st-status-check">G1: 1st Status Check</h6>
+<p><img src="file:///c:\Projects\WGU\PackageTracker\Photos\statusCheck1.png" alt="img.png"></p>
+<h3 id="g2-2nd-status-check">G2: 2nd Status Check</h3>
+<p><img src="file:///c:\Projects\WGU\PackageTracker\Photos\statusCheck2.png" alt="img_1.png"></p>
+<h3 id="g3-3rd-status-check">G3: 3rd Status Check</h3>
+<p><img src="file:///c:\Projects\WGU\PackageTracker\Photos\statusCheck3.png" alt="img_2.png"></p>
+<h6 id="h-screenshots-of-execution">H: Screenshots of Execution</h6>
+<h3 id="screenshot-1">Screenshot #1</h3>
+<p><img src="file:///c:\Projects\WGU\PackageTracker\Photos\screenshot1.png" alt="img.png"></p>
+<h3 id="screenshot-2">Screenshot #2</h3>
+<p><img src="file:///c:\Projects\WGU\PackageTracker\Photos\screenshot2.png" alt="img_1.png"></p>
+<h3 id="screenshot-3">Screenshot #3</h3>
+<p><img src="file:///c:\Projects\WGU\PackageTracker\Photos\screenshot3.png" alt="img_2.png"></p>
+<h2 id="future-improvements">Future Improvements</h2>
+<h6 id="j-different-approach">J: Different Approach</h6>
+<p>I would modify the process and make the sorting of the packages more robust so that it would be stable and fit any kind
+of package. I would like to make it more cohesive, and just use better coding practices making it more SOLID. I would
+also like to give it a true GUI UI.</p>
+
+    </body>
+    </html>
