@@ -1,3 +1,4 @@
+import csv
 from abc import ABC, abstractmethod
 from dataclasses import field, dataclass
 from typing import Optional, Dict, List, NewType, Tuple
@@ -16,11 +17,11 @@ class Graph(ABC):
         """Represents the Graph as a string"""
 
     @abstractmethod
-    def extract_vertices(self, data):
+    def extract_vertices(self, data: csv.DictReader) -> None:
         """Extracts data to create the vertices"""
 
     @abstractmethod
-    def build_edges(self, data):
+    def build_edges(self, data: csv.DictReader) -> None:
         """Extracts data to create the edges of the graph"""
 
     def add_vertex(self, new_vertex) -> None:

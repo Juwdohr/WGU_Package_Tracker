@@ -9,7 +9,7 @@ from . import Directed, Vertex
 class Undirected(Directed):
     """Represents an Undirected Graph"""
 
-    def build_edges(self, data):
+    def build_edges(self, data: csv.DictReader):
         """
            Creates all edges from the graph.
            Time Complexity: O(n)

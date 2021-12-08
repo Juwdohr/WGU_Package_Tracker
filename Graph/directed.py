@@ -26,7 +26,7 @@ class Directed(Graph):
         self.adjacency_list[from_vertex].append(to_vertex)
         # {vertex_1: [vertex_2, vertex_3], vertex_2: [vertex_6], ...}
 
-    def build_graph(self, data: csv.DictReader) -> None:
+    def build_edges(self, data: csv.DictReader) -> None:
         """
         Creates all edges from the graph.
         Time Complexity: O(n)
