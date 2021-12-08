@@ -32,6 +32,15 @@ def update_needed(package_notes: str, current_time: time) -> bool:
         hour=10, minute=20
     )
 
+
+def same_location(package_delivery_address, current_location):
+    return package_delivery_address == current_location
+
+
+def is_smaller_distance(distance, current_distance):
+    return distance < current_distance
+
+
 @dataclass
 class Truck:
     id: int
@@ -152,23 +161,22 @@ class Truck:
         Time Complexity: O(n)
         :return: list of packages
         """
-        queue = []
 
         # Check for priority
+
+        queue = []
+
         for package in self.cargo:
             if update_needed(package.notes.lower(), self.time):
                 package.delivery_address = "410 S State St\nSalt Lake City, UT 84111"
             elif 'wrong address' in package.notes.lower() or package.status is Status.DELIVERED:
                 continue
-
-            # Check if package address is same as current truck location
-            if package.address == self.location.label:
+            elif same_location(package.address, self.location.label):
                 return [package]
-
-            if is_time_between(
-                    start_time=self.time,
-                    end_time=(datetime.combine(datetime.today(), self.time) + timedelta(minutes=30)).time(),
-                    check_time=package.delivery_deadline
+            elif is_time_between(
+                self.time,
+                (datetime.combine(datetime.today(), self.time) + timedelta(minutes=30)).time(),
+                package.delivery_deadline
             ):
                 queue.append(package)
         return queue
@@ -191,9 +199,9 @@ class Truck:
                 continue
 
             package_delivery_location: Vertex = self.map.find_vertex(package.address)
-            if package_delivery_location == self.location.label:
+            if same_location(package.address, self.location.label):
                 return package
-            elif package_delivery_location.distance < distance:
+            elif is_smaller_distance(package_delivery_location.distance, distance):
                 distance = package_delivery_location.distance
                 next_package = package
 
