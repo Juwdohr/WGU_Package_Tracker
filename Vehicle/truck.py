@@ -6,7 +6,7 @@ from Graph import Vertex, Graph, find_shortest_paths
 from Package import Package, Status
 
 
-def is_time_between(start_time, end_time, check_time):
+def is_time_between(start_time, end_time, check_time) -> bool:
     """
     Checks if a time is between two other times.
     :param start_time: The start time.
@@ -19,6 +19,18 @@ def is_time_between(start_time, end_time, check_time):
     else:
         return start_time <= check_time or check_time <= end_time
 
+
+def update_needed(package_notes: str, current_time: time) -> bool:
+    """
+    Checks if package needs to be updated.
+    Time Complexity: O(n)
+    :param package_notes: Package notes to check
+    :param current_time: time to check against
+    :return:
+    """
+    return 'wrong address' in package_notes and current_time >= time(
+        hour=10, minute=20
+    )
 
 @dataclass
 class Truck:
@@ -130,9 +142,9 @@ class Truck:
         if len(priority_queue) == 1:
             return priority_queue.pop()
         elif len(priority_queue) > 1:
-            return self.closest_package(priority_queue)
+            return self.get_next_package(priority_queue)
         else:
-            return self.closest_package()
+            return self.get_next_package()
 
     def get_priority_queue(self) -> list:
         """
@@ -141,14 +153,14 @@ class Truck:
         :return: list of packages
         """
         queue = []
-        next_delivery_time = (datetime.combine(datetime.today(), self.time) + timedelta(minutes=30)).time()
 
-        # Check for priorty
+        # Check for priority
         for package in self.cargo:
-            if 'wrong address' in package.notes.lower() and self.time >= time(hour=10, minute=20):
-                package.delivery_address = "410 S State St\nSalt Lake City, UT 84111"
-            if 'wrong address' in package.notes.lower():
+            if 'wrong address' not in package.notes.lower():
                 continue
+            elif self.time >= time(hour=10, minute=20):
+                package.delivery_address = "410 S State St\nSalt Lake City, UT 84111"
+
             # Check if package is delivered
             if package.status is Status.DELIVERED:
                 continue
@@ -156,11 +168,15 @@ class Truck:
             if package.address == self.location.label:
                 return [package]
 
-            if is_time_between(self.time, next_delivery_time, package.delivery_deadline):
+            if is_time_between(
+                    start_time=self.time,
+                    end_time=(datetime.combine(datetime.today(), self.time) + timedelta(minutes=30)).time(),
+                    check_time=package.delivery_deadline
+            ):
                 queue.append(package)
         return queue
 
-    def closest_package(self, packages: list = None) -> Package:
+    def get_next_package(self, packages: list = None) -> Package:
         """
         Finds the closest package to truck based on distance
         Time Complexity: O(n)
@@ -172,16 +188,15 @@ class Truck:
         distance = float('inf')
         next_package = packages[0]
         for package in packages:
-            if 'wrong address' in package.notes.lower() and self.time >= time(hour=10, minute=20):
+            if update_needed(package.notes.lower(), self.time):
                 package.delivery_address = "410 S State St\nSalt Lake City, UT 84111"
-            if 'wrong address' in package.notes.lower():
+            elif 'wrong address' in package.notes.lower() or package.status is Status.DELIVERED:
                 continue
-            if package.status is Status.DELIVERED:
-                continue
+
             package_delivery_location: Vertex = self.map.find_vertex(package.address)
             if package_delivery_location == self.location.label:
                 return package
-            if package_delivery_location.distance < distance:
+            elif package_delivery_location.distance < distance:
                 distance = package_delivery_location.distance
                 next_package = package
 
