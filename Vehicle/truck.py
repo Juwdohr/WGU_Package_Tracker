@@ -156,14 +156,11 @@ class Truck:
 
         # Check for priority
         for package in self.cargo:
-            if 'wrong address' not in package.notes.lower():
-                continue
-            elif self.time >= time(hour=10, minute=20):
+            if update_needed(package.notes.lower(), self.time):
                 package.delivery_address = "410 S State St\nSalt Lake City, UT 84111"
-
-            # Check if package is delivered
-            if package.status is Status.DELIVERED:
+            elif 'wrong address' in package.notes.lower() or package.status is Status.DELIVERED:
                 continue
+
             # Check if package address is same as current truck location
             if package.address == self.location.label:
                 return [package]
