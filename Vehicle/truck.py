@@ -193,13 +193,12 @@ class Truck:
         distance = float('inf')
         next_package = packages[0]
         for package in packages:
+            package_delivery_location: Vertex = self.map.find_vertex(package.address)
             if update_needed(package.notes.lower(), self.time):
                 package.delivery_address = "410 S State St\nSalt Lake City, UT 84111"
             elif 'wrong address' in package.notes.lower() or package.status is Status.DELIVERED:
                 continue
-
-            package_delivery_location: Vertex = self.map.find_vertex(package.address)
-            if same_location(package.address, self.location.label):
+            elif same_location(package.address, self.location.label):
                 return package
             elif is_smaller_distance(package_delivery_location.distance, distance):
                 distance = package_delivery_location.distance
