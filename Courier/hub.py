@@ -1,17 +1,35 @@
 from dataclasses import dataclass, field
 from datetime import time
 
-from Graph import Graph, Vertex
+import Graph
 import HashTable
-from Package import Status
-from Vehicle import Truck
+import Package
+import Vehicle
+
+
+def is_deliverable(package: Package.Package, current_time: time):
+    """
+    Updates status and checks if status of package is deliverable
+    Time Complexity: O(1)
+    :param package: Package to check
+    :param current_time: Current current_time
+    :return:
+    """
+    if package.status == Package.Status.DELAYED and current_time >= time(9, 5):
+        package.status = Package.Status.AT_HUB
+    return package.status not in [
+        Package.Status.DELIVERED,
+        Package.Status.ON_TRUCK,
+        Package.Status.DELAYED,
+        Package.Status.EN_ROUTE,
+    ]
 
 
 @dataclass
 class Hub:
     packages: HashTable
-    gps: Graph
-    HUB: Vertex = field(init=False, repr=False, default=None)
+    gps: Graph.Graph
+    HUB: Graph.Vertex = field(init=False, repr=False, default=None)
     MAX_TRUCKS: int = field(init=False, repr=False, default=3)
     MAX_TRUCK_CAPACITY: int = field(init=False, repr=False, default=16)
     fleet: list = field(init=False, repr=False, default_factory=list)
@@ -23,11 +41,11 @@ class Hub:
         :return: None
         """
         # create a fleet of trucks
-        for i in range(1, self.MAX_TRUCKS + 1):
-            self.fleet.append(Truck(i, self.gps))
+        for i in range(1, self.MAX_TRUCKS):
+            self.fleet.append(Vehicle.Truck(i, self.gps))
         self.HUB = self.gps.find_vertex("HUB")
 
-    def get_packages_by_postal(self, truck_id: int) -> list:
+    def get_packages_by_postal(self, truck: Vehicle.Truck) -> None:
         """
         Loads & sorts truck with all_packages
         Time Complexity: O(n)
@@ -35,79 +53,51 @@ class Hub:
         :return: list if Packages to load on to truck
         """
 
-        load = []
-
         # Cycle through all package ids
         for package_id in range(1, len(self.packages) + 1):
             package = self.packages.search(package_id)
 
-            # If package is delayed it cannot get onto a truck at this end_time.
-            if package.status in [Status.DELIVERED, Status.ON_TRUCK, Status.DELAYED, Status.EN_ROUTE]:
-                continue
+            # Truck 1 needs to have packages from 84117, 84115, 84104, 84105, 84106, 84107
+            # Truck 2 needs to have packages from 84102, 84119, 84111, 84103, 84121, 84118
+            if (
+                    truck.id == 1
+                    and package.postal_code in ['84117', '84115', '84104', '84105', '84106', '84107']
+                    and len(truck.cargo) < self.MAX_TRUCK_CAPACITY
+                    and is_deliverable(package, truck.time)
+            ):
+                truck.load(package)
 
-            # Truck 1 needs to have all_packages from 84117, 84115, 84104
-            if truck_id == 1 and package.postal_code in ['84117', '84115', '84104'] and len(
-                    load) < self.MAX_TRUCK_CAPACITY:
-                load.append(package)
-
-            # Truck 2 needs to have all_packages from 84102, 84119, 84111, 84103
-            if truck_id == 2 and package.postal_code in ['84102', '84119', '84111', '84123', '84103'] and len(
-                    load) < self.MAX_TRUCK_CAPACITY:
-                load.append(package)
-
-            # Truck 3 needs all_packages from 84121, 84118, 84105, 84106, 84107
-            if truck_id == 3 and package.postal_code in ['84121', '84118', '84105', '84106', '84107'] and len(
-                    load) < self.MAX_TRUCK_CAPACITY:
-                load.append(package)
-        return load
+            if (
+                truck.id == 2
+                and package.postal_code
+                in ['84102', '84119', '84111', '84123', '84103', '84121', '84118']
+                and len(truck.cargo) < self.MAX_TRUCK_CAPACITY
+                and is_deliverable(package, truck.time)
+            ):
+                truck.load(package)
 
     def release_trucks(self) -> None:
-        self.fleet.reverse()
+        """
+        Releases each truck to run deliveries
+        Time Complexity: O(n^2)
+        :return: None
+        """
+        departure_time = time(hour=8, minute=0)
         for truck in self.fleet:
-            if truck.id == 3:
-                self.load_truck(truck, time(hour=8, minute=0))
-                truck.deliver_packages(time(hour=20, minute=0))
-                truck.drive(self.HUB)
-            elif truck.id == 1:
-                self.load_truck(truck, time(hour=8, minute=0))
-                self.run_deliveries(truck)
-            elif truck.id == 2:
-                departure_time = self.fleet[0].time
-                self.load_truck(truck, departure_time)
-                self.run_deliveries(truck)
+            self.load_truck(truck, departure_time)
+            self.run_deliveries(truck)
 
-    # TODO Rename this here and in `release_trucks`
-    def run_deliveries(self, truck):
+    def run_deliveries(self, truck) -> None:
         """
         Runs all deliveries
-        Time Complexity: O(n^2)(
+        Time Complexity: O(n^2)
         :param truck:
         :return:
         """
         truck.deliver_packages(time(hour=9, minute=5))
-        self.pickup_delayed_packages(truck)
+        self.get_packages_by_postal(truck)
         truck.deliver_packages(time(hour=20, minute=0))
 
     def load_truck(self, truck, departure_time: time):
         truck.set_departure(departure_time)
-        truck.load(self.get_packages_by_postal(truck.id))
-
-    def pickup_delayed_packages(self, truck: Truck) -> None:
-        """
-        Sets delayed packages to AT_HUB
-        Sends truck to hub to get new all_packages
-        Time Complexity: O(n^2)
-        :param truck: Truck to load the packages
-        :return: None
-        """
-        for package_id in range(1, len(self.packages) + 1):
-            package = self.packages.search(package_id)
-            if package.status == Status.DELAYED and truck.time >= time(9, 5):
-                package.status = Status.AT_HUB
-
-        load = self.get_packages_by_postal(truck.id)
-
-        if len(load) > 0:
-            if truck.location.label != "HUB":
-                truck.drive(truck.map.find_vertex("HUB"))
-            truck.load(load)
+        self.get_packages_by_postal(truck)

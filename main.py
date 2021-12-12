@@ -7,7 +7,6 @@ import Courier
 import Graph
 import UI
 from HashTable import Chained
-from Package import Package
 
 
 def main(wgups: Courier) -> None:
@@ -52,12 +51,12 @@ def load_distances() -> Graph.Undirected:
     :return: Returns a graph containing the distances from the CSV file
     """
 
-    data = load_file("distances.csv")
+    _data = load_file("distances.csv")
     graph = Graph.Undirected()
 
-    if data is not None:
-        graph.extract_vertices(data)
-        graph.build_edges(data)
+    if _data is not None:
+        graph.extract_vertices(_data.fieldnames)
+        graph.build_graph(_data)
 
     return graph
 
@@ -74,10 +73,7 @@ def load_packages() -> Chained:
     table = Chained()
 
     if _data is not None:
-
-        for row in _data:
-            package = Package(**row)
-            table.insert(package.id, package)
+        table.build_table(_data)
 
     return table
 
@@ -85,6 +81,6 @@ def load_packages() -> Chained:
 if __name__ == '__main__':
     """
     Starting point of program
-    Time Complexity: O(n * log n)
+    Time Complexity: O(n^2)
     """
-    main(Courier.Hub(load_packages(), load_distances()))
+    main(Courier.Hub(load_packages(), load_distances()))  # O(n^2)

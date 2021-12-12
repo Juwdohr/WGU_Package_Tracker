@@ -75,7 +75,7 @@ class Package:
 
     def deliver(self, timestamp: time) -> bool:
         """
-        Marks the package as delivered and sets the time it was delivered
+        Marks the package as delivered and sets the current_time it was delivered
         Time Complexity: O(1)
         :param timestamp: Time that it was delivered
         :return:

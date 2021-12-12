@@ -1,28 +1,32 @@
-import csv
 from abc import ABC, abstractmethod
 from dataclasses import field, dataclass
 from typing import Optional, Dict, List, NewType, Tuple
 
 from .vertex import Vertex
 
+
 @dataclass
 class Graph(ABC):
     """Abstract class defining a graph"""
-    @abstractmethod
-    def __repr__(self) -> str:
-        """String representation of how the graph is instantiated"""
+    adjacency_list: Dict['Vertex', list['Vertex']] = field(init=False, default_factory=dict)
+    edge_weights: Dict['tuple[Vertex, Vertex]', float] = field(init=False, default_factory=dict)
 
     @abstractmethod
-    def __str__(self) -> str:
-        """Represents the Graph as a string"""
+    def extract_vertices(self, data_fieldnames) -> None:
+        """
+        Converts fieldnames from CSV File to vertices
+        :param data_fieldnames: CSV data fieldnames
+        :return: None
+        """
 
     @abstractmethod
-    def extract_vertices(self, data: csv.DictReader) -> None:
-        """Extracts data to create the vertices"""
-
-    @abstractmethod
-    def build_edges(self, data: csv.DictReader) -> None:
-        """Extracts data to create the edges of the graph"""
+    def build_graph(self, data) -> None:
+        """
+        Builds the graph from csv data
+        Time complexity: O(n)
+        :param data: CSV Data
+        :return: None
+        """
 
     def add_vertex(self, new_vertex) -> None:
         """

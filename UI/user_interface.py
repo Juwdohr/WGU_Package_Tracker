@@ -32,7 +32,7 @@ class UserInterface:
         :param lookup_time: Time to lookup
         :return:
         """
-        package = self.packages.search(package_id)
+        package = self.packages.search(package_id)  # O(n)
 
         if package is None:
             return print('ID is not recognized')
