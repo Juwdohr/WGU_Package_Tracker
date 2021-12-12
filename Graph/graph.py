@@ -8,7 +8,7 @@ from .vertex import Vertex
 @dataclass
 class Graph(ABC):
     """Abstract class defining a graph"""
-    adjacency_list: Dict['Vertex', list['Vertex']] = field(init=False, default_factory=dict)
+    adjacency_list: Dict['Vertex', List['Vertex']] = field(init=False, default_factory=dict)
     edge_weights: Dict['tuple[Vertex, Vertex]', float] = field(init=False, default_factory=dict)
 
     @abstractmethod
