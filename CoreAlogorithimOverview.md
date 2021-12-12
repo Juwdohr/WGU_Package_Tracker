@@ -54,10 +54,10 @@ Deliver packages
         correct if needed
     get next location from the current package
     if next location is not the current truck location
-        use dijksta's algorithim to find the shortest distances
+        use Dijkstra's algorithm to find the shortest distances
         drive to next location
     deliver package
-    repeat until all pacakges are delivered
+    repeat until all packages are delivered
 Run the user interface
     Get User option
         1 for single package lookup
