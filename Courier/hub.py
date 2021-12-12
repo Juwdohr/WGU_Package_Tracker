@@ -99,5 +99,12 @@ class Hub:
         truck.deliver_packages(time(hour=20, minute=0))
 
     def load_truck(self, truck, departure_time: time):
+        """
+        Sets the departure time and loads the truck
+        Time Complexity: O(n)
+        :param truck:
+        :param departure_time:
+        :return:
+        """
         truck.set_departure(departure_time)
         self.get_packages_by_postal(truck)
