@@ -102,3 +102,14 @@ class ChainedHashTable:
                 return True
 
         return False
+
+    def build_table(self, _data):
+        """
+        Unpacks data into package and stores into table
+        Time Complexity: O(n)
+        :param _data: Data to insert into table
+        :return:
+        """
+        for row in _data:
+            package = Package(**row)
+            self.insert(package.id, package)

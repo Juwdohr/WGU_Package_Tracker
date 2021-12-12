@@ -4,21 +4,29 @@ from typing import Optional, Dict, List, NewType, Tuple
 
 from .vertex import Vertex
 
-VertexTuple = NewType('VertexTuple', Tuple[Vertex, Vertex])
 
 @dataclass
 class Graph(ABC):
     """Abstract class defining a graph"""
     adjacency_list: Dict['Vertex', List['Vertex']] = field(init=False, default_factory=dict)
-    edge_weights: Dict[VertexTuple, float] = field(init=False, default_factory=dict)
+    edge_weights: Dict['tuple[Vertex, Vertex]', float] = field(init=False, default_factory=dict)
 
     @abstractmethod
-    def __repr__(self) -> str:
-        pass
+    def extract_vertices(self, data_fieldnames) -> None:
+        """
+        Converts fieldnames from CSV File to vertices
+        :param data_fieldnames: CSV data fieldnames
+        :return: None
+        """
 
     @abstractmethod
-    def __str__(self) -> str:
-        pass
+    def build_graph(self, data) -> None:
+        """
+        Builds the graph from csv data
+        Time complexity: O(n)
+        :param data: CSV Data
+        :return: None
+        """
 
     def add_vertex(self, new_vertex) -> None:
         """
@@ -40,4 +48,3 @@ class Graph(ABC):
             if key.label == label:
                 return key
         return None
-

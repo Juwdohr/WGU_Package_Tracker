@@ -45,8 +45,7 @@ The algorithm used within project is Dijkstra's algorithm, which is a variant of
 Load Packages from file
 Load Distances from file
 Create a fleet of trucks
-Load trucks based off of Postal Codes or other specific criteria.
-    Sort Packages by Location and Time
+Load trucks based off of Postal Codes
 Set departure time for trucks while looping through them
 Deliver packages
     Check for and pickup delayed packages at specific intervals
@@ -78,47 +77,71 @@ with 8GB of Ram.
 
 ###### B3: Space-Time and Big-O
 I have included in the code the time complexities for each function in the Docstrings, but I have also included them here.
+The complete Time and Space Complexity for the Program should be O(n log n)
 
-| main.py                   | Time Complexity |
-|---------------------------|----------------:|
-|load_file                  |            O(n) |
-|load_distances             |          O(n^2) |
-|load_packages              |            O(n) |
-|load_truck                 |    O(n * log n) |
-|deliver_packages           |            O(n) |
-|pickup_delayed_packages    |            O(n) |
-|main                       |    O(n * log n) |
-|lookup_single_package      |            O(n) |
-|lookup_all_packages        |            O(n) |
-|user_interface             |            O(n) |
+| main.py        | Time Complexity |
+|----------------|----------------:|
+| main           |          O(n^2) |
+| load_file      |            O(1) |
+| load_distances |          O(n^2) |
+| load_packages  |            O(n) |
 
-| Graph\\\_\_init__.py | Time Complexity |
-|----------------------|----------------:|
-| find_shortest_paths  |          O(n^2) |
+| Courier/hub.py          | Time Complexity |
+|-------------------------|----------------:|
+| \_\_post_init__         |            O(n) |
+| get_packages_by_postal  |            O(n) |
+| release_trucks          |          O(n^2) |
+| run_deliveries          |          O(n^2) |
+| load_truck              |            O(n) |
+| pickup_delayed_packages |          O(n^2) |
 
-| Graph\directed.py | Time Complexity |
-|-------------------|----------------:|
-| add_directed_edge |            O(1) |
-| \_\_repr__        |            O(1) |
-| \_\_str__         |            O(1) |
+| Package/package.py | Time Complexity |
+|--------------------|----------------:|
+| \_\_post_init__    |            O(1) |
+| \_\_str__          |            o(1) |
+| delivery_address   |            O(1) |
+| delivery_address   |            O(1) |
+| deliver            |            O(1) |
 
-| Graph\graph.py | Time Complexity |
+| Vehicle/truck.py      | Time Complexity |
+|-----------------------|----------------:|
+| \_\_post_init__       |            O(n) |
+| load                  |            O(n) |
+| drive                 |            O(1) |
+| deliver_package       |            O(1) |
+| set_departure         |            O(n) |
+| deliver_packages      |          O(n^2) |
+| find_next_deliverable |            O(n) |
+| get_priority_queue    |            O(n) |
+| get_next_package       |            O(n) |
+
+| Graph/\_\_init__    | Time Complexity |
+|---------------------|----------------:|
+| find_shortest_paths |          O(n^2) |
+
+| Graph/directed.py   | Time Complexity |
+|---------------------|----------------:|
+| add_undirected_edge |            O(1) |
+| \_\_repr__          |            O(1) |
+| \_\_str__           |            O(1) |
+
+| Graph/graph.py | Time Complexity |
 |----------------|----------------:|
 | add_vertex     |            O(1) |
-| find_vertex    |            O(1) |
+| find_vertex    |            O(n) |
 
-| Graph\undirected.py | Time Complexity |
+| Graph/undirected.py | Time Complexity |
 |---------------------|----------------:|
-| add_undirected_edge |            0(1) |
-| \_\_repr__          |            0(1) |
-| \_\_str__           |            0(1) |
+| add_undirected_edge |             O() |
+| \_\_repr__          |            O(1) |
+| \_\_str__           |            O(1) |
 
-| Graph\vertex.py | Time Complexity |
+| Graph/vertex.py | Time Complexity |
 |-----------------|----------------:|
 | \_\_post_init__ |            O(1) |
 | reset           |            O(1) |
 
-| HashTable\chained.py | Time Complexity |
+| HashTable/chained.py | Time Complexity |
 |----------------------|----------------:|
 | \_\_post_init__      |            O(n) |
 | \_\_len__            |            O(n) |
@@ -127,20 +150,12 @@ I have included in the code the time complexities for each function in the Docst
 | search               |            O(n) |
 | remove               |            O(n) |
 
-| Package\package.py | Time Complexity |
-|--------------------|----------------:|
-| \_\_post_init__    |            O(1) |
-| \_\_str__          |            O(1) |
-| delivery_address   |            O(1) |
-| delivery_address   |            O(1) |
-| deliver            |            O(1) |
-
-| Vehicle\truck.py | Time Complexity |
-|------------------|----------------:|
-| \_\_post_init__  |            O(1) |
-| load             |    0(n * log n) |
-| drive            |            O(1) |
-| deliver          |            O(1) |
+| UI/user_interface.py  | Time Complexity |
+|-----------------------|----------------:|
+| print_header          |            O(n) |
+| lookup_single_package |            O(n) |
+| lookup_all_packages   |            O(n) |
+| run                   |            O(n) |
 
 ###### B4: Adaptability
 The application, with the increasing number of packages, should adapt well due to its self-adjusting algorithm and data-structure.
@@ -158,13 +173,13 @@ design patterns. I would like to see this done in future iterations of my applic
 
 The self adjusting data structure that was used was the hash table.
 
-Strengths                                            | Weaknesses
------------------------------------------------------|---------------------------------------------------
-Speed in which to access items                       | Does not allow null or empty values
-Average Time Complexity O(1)                         | Worse Case Time Complexity O(n)
-Insertion Time Complexity = O(1)                     | loop through items in order to search linked lists
-Can grow infinitely as long as there is enough space | linearly slower as the load factor increases
-Never need to be resized                             | 
+| Strengths                                            | Weaknesses                                         |
+|------------------------------------------------------|----------------------------------------------------|
+| Speed in which to access items                       | Does not allow null or empty values                |
+| Average Time Complexity O(1)                         | Worse Case Time Complexity O(n)                    |
+| Insertion Time Complexity = O(1)                     | loop through items in order to search linked lists |
+| Can grow infinitely as long as there is enough space | linearly slower as the load factor increases       |
+| Never need to be resized                             |                                                    |
 
 ## Data Structures
 ###### D: Data Structure, D1: Explanation of Data Structure
@@ -182,12 +197,12 @@ looking at the first value in each tuple, which is the ID. If the ID is the same
 
 ### Comparison to Linear search
 Both the storing into and the retrieval of the data in the hash table than in a linear search as it breaks up the number
-of packages and has a key to find each item. This can speed up the look-up as the number of items in each bucket
+of packages and has a key to find each .item. This can speed up the look-up as the number of items in each bucket
 approaches 1.
 
 ### Discussion
 ###### K1: Verification of Data Structure
-All packages are delivered under 140, coming in at 128.2 miles. All but three packages were delivered on time, and the 3
+All packages are delivered under 140, coming in at 95.5 miles. All but three packages were delivered on time, and the 3
 that were late in delivery were only minutes off this is due to package specifications. You can verify this in the
 screenshots provided, as well as through the provided user interface at the beginning and by selecting all packages and
 providing a time to look up the packages and see the reporting statuses. This also proves that an efficient hash-table,
@@ -234,10 +249,10 @@ providing a time to look up the packages.
 Other possible algorithms that could meet the scenario's requirements are the The Brute-Force Approach, or the Nearest
 Neighbor Method. 
 
-|               | The Brute Force Algorithm | The Branch and Bound Method                |    Nearest Neighbor Method   |
-|:-------------:|:-------------------------:|:------------------------------------------:|:----------------------------:|
-|Time-Complexity|                  O(n * m) |                       O(n²)                |                   O(n²)      |
-|Advantages     | Finds all possible routes | steps broken into several smaller problems |Always finds nearest neighbor |
+|                 | The Brute Force Algorithm |        The Branch and Bound Method         |    Nearest Neighbor Method    |
+|:---------------:|:-------------------------:|:------------------------------------------:|:-----------------------------:|
+| Time-Complexity |         O(n * m)          |                   O(n²)                    |             O(n²)             |
+|   Advantages    | Finds all possible routes | steps broken into several smaller problems | Always finds nearest neighbor |
 
 ## Screenshots
 ###### G1: 1st Status Check
@@ -251,13 +266,13 @@ Neighbor Method.
 
 ###### H: Screenshots of Execution
 ### Screenshot #1
-![img_3.png](Photos/screenshot1.png)
+![img.png](Photos/screenshot1.png)
 
 ### Screenshot #2
-![img_4.png](Photos/screenshot2.png)'
+![img_1.png](Photos/screenshot2.png)
 
 ### Screenshot #3
-![screenshot3.png](Photos/screenshot3.png)
+![img_2.png](Photos/screenshot3.png)
 
 ## Future Improvements
 ###### J: Different Approach
