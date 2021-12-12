@@ -82,6 +82,7 @@ class UserInterface:
                                                 '%H:%M').time()
                 print("ID, Delivery Address, Mass in KG, Delivery Deadline, Status")
                 self.lookup_single_package(package_id, lookup_time)
+                input("Press enter to continue.")
                 continue
 
             if user_input == 2:
@@ -90,6 +91,7 @@ class UserInterface:
                                                 '%H:%M').time()
                 print("ID, Delivery Address, Mass in KG, Delivery Deadline, Status")
                 self.lookup_all_packages(lookup_time)
+                input("Press enter to continue.")
                 continue
 
         print("Goodbye")

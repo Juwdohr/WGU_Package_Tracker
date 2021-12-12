@@ -6,6 +6,23 @@ from . import Directed, Vertex
 @dataclass
 class Undirected(Directed):
     """Represents an Undirected Graph"""
+
+    def __repr__(self):
+        """
+        Returns string representation of
+        Time Complexity: O(1)
+        :return:
+        """
+        return 'Undirected()'
+
+    def __str__(self):
+        """
+        Returns string representation
+        Time Complexity: O(n)
+        :return: string representation of Adjacency List
+        """
+        return self.adjacency_list.__str__()
+
     def extract_vertices(self, data_fieldnames) -> None:
         """
         Converts fieldnames from CSV File to vertices

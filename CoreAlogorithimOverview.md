@@ -77,23 +77,22 @@ with 8GB of Ram.
 
 ###### B3: Space-Time and Big-O
 I have included in the code the time complexities for each function in the Docstrings, but I have also included them here.
-The complete Time and Space Complexity for the Program should be O(n log n)
+The complete Time and Space Complexity for the Program should be O(n²).
 
 | main.py        | Time Complexity |
 |----------------|----------------:|
-| main           |          O(n^2) |
+| main           |           O(n²) |
 | load_file      |            O(1) |
-| load_distances |          O(n^2) |
+| load_distances |           O(n²) |
 | load_packages  |            O(n) |
 
-| Courier/hub.py          | Time Complexity |
-|-------------------------|----------------:|
-| \_\_post_init__         |            O(n) |
-| get_packages_by_postal  |            O(n) |
-| release_trucks          |          O(n^2) |
-| run_deliveries          |          O(n^2) |
-| load_truck              |            O(n) |
-| pickup_delayed_packages |          O(n^2) |
+| Courier/hub.py         | Time Complexity |
+|------------------------|----------------:|
+| \_\_post_init__        |            O(n) |
+| get_packages_by_postal |            O(n) |
+| release_trucks         |           O(n²) |
+| run_deliveries         |           O(n²) |
+| load_truck             |            O(n) |
 
 | Package/package.py | Time Complexity |
 |--------------------|----------------:|
@@ -110,20 +109,22 @@ The complete Time and Space Complexity for the Program should be O(n log n)
 | drive                 |            O(1) |
 | deliver_package       |            O(1) |
 | set_departure         |            O(n) |
-| deliver_packages      |          O(n^2) |
+| deliver_packages      |           O(n²) |
 | find_next_deliverable |            O(n) |
 | get_priority_queue    |            O(n) |
-| get_next_package       |            O(n) |
+| get_next_package      |            O(n) |
 
 | Graph/\_\_init__    | Time Complexity |
 |---------------------|----------------:|
-| find_shortest_paths |          O(n^2) |
+| find_shortest_paths |           O(n²) |
 
 | Graph/directed.py   | Time Complexity |
 |---------------------|----------------:|
+| extract_vertices    |            O(n) |
+| build_graph         |            O(n) |
 | add_undirected_edge |            O(1) |
 | \_\_repr__          |            O(1) |
-| \_\_str__           |            O(1) |
+| \_\_str__           |            O(n) |
 
 | Graph/graph.py | Time Complexity |
 |----------------|----------------:|
@@ -132,9 +133,11 @@ The complete Time and Space Complexity for the Program should be O(n log n)
 
 | Graph/undirected.py | Time Complexity |
 |---------------------|----------------:|
-| add_undirected_edge |             O() |
+| extract_vertices    |            O(n) |
+| build_graph         |            O(n) |
+| add_undirected_edge |            O(1) |
 | \_\_repr__          |            O(1) |
-| \_\_str__           |            O(1) |
+| \_\_str__           |            O(n) |
 
 | Graph/vertex.py | Time Complexity |
 |-----------------|----------------:|
@@ -149,6 +152,7 @@ The complete Time and Space Complexity for the Program should be O(n log n)
 | insert               |            O(n) |
 | search               |            O(n) |
 | remove               |            O(n) |
+| build_table          |            O(n) |
 
 | UI/user_interface.py  | Time Complexity |
 |-----------------------|----------------:|
@@ -159,11 +163,10 @@ The complete Time and Space Complexity for the Program should be O(n log n)
 
 ###### B4: Adaptability
 The application, with the increasing number of packages, should adapt well due to its self-adjusting algorithm and data-structure.
-At this time I feel like it would not scale well because of the sorting done to the packages to get them sorted as this
-happens within O(n * log n) time. 
+At this time I feel like it would scale well.
 
 ###### B5: Efficiency and Maintainability
-As for the efficiency of the program it runs within O(n * log n) due to the sort methods place upon the truck loads.
+As for the efficiency of the program it runs within O(n²).
 
 For the maintainability, I believe this could be maintained easily by other developers due to the
 compartmentalization and the code comments. This can be done through refactoring and compartmentalizing, and using better
@@ -256,13 +259,13 @@ Neighbor Method.
 
 ## Screenshots
 ###### G1: 1st Status Check
-![img.png](Photos/statusCheck1.png)
+![img_4.png](Photos/time_check_0900.png)
 
 ### G2: 2nd Status Check 
-![img_1.png](Photos/statusCheck2.png)
+![img_5.png](Photos/time_check_1000.png)
 
 ### G3: 3rd Status Check
-![img_2.png](Photos/statusCheck3.png)
+![img_6.png](Photos/time_check_1300.png)
 
 ###### H: Screenshots of Execution
 ### Screenshot #1
@@ -273,6 +276,9 @@ Neighbor Method.
 
 ### Screenshot #3
 ![img_2.png](Photos/screenshot3.png)
+
+### Screenshot #4
+![img_3.png](Photos/screenshot4.png)
 
 ## Future Improvements
 ###### J: Different Approach

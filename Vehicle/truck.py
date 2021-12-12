@@ -23,7 +23,7 @@ def is_time_between(start_time, end_time, check_time):
 
 def has_wrong_address(package: Package, current_time: time) -> bool:
     """
-    Checks pacakge address updates if necessary at correct time
+    Checks package address & updates if necessary at correct time.
     Time complexity: O(1)
     :param package: Package to check address and notes on.
     :param current_time: Trucks current time

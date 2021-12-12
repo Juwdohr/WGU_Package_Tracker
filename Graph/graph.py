@@ -15,6 +15,7 @@ class Graph(ABC):
     def extract_vertices(self, data_fieldnames) -> None:
         """
         Converts fieldnames from CSV File to vertices
+        Time Complexity: Abstract method
         :param data_fieldnames: CSV data fieldnames
         :return: None
         """
@@ -23,7 +24,7 @@ class Graph(ABC):
     def build_graph(self, data) -> None:
         """
         Builds the graph from csv data
-        Time complexity: O(n)
+        Time Complexity: Abstract method
         :param data: CSV Data
         :return: None
         """
